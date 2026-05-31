@@ -1,0 +1,2 @@
+[phases.setup]
+nixPkgs = ["libuuid", "fontconfig", "freetype", "libpng", "libjpeg", "giflib", "librsvg", "pango", "cairo"]
