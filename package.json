@@ -6,8 +6,8 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^1.14.1",
+    "@resvg/resvg-js": "^2.6.2",
     "discord.js": "^14.26.4",
-    "puppeteer-core": "^24.0.0",
     "sharp": "^0.33.5"
   }
 }
