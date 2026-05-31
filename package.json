@@ -2,12 +2,14 @@
   "name": "discord-football-bot",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": { "start": "node index.js" },
+  "scripts": {
+    "start": "node index.js",
+    "postinstall": "npx playwright install chromium --with-deps || echo 'playwright install skipped'"
+  },
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^1.14.1",
-    "@resvg/resvg-js": "^2.6.2",
     "discord.js": "^14.26.4",
-    "sharp": "^0.33.5"
+    "playwright": "^1.52.0"
   }
 }
