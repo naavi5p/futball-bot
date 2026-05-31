@@ -9,7 +9,16 @@ const { execSync } = require('child_process');
 let browserInstance = null;
 
 function findChromium() {
-  // Cherche chromium installé par Nix ou le système
+  // Log pour debug
+  try {
+    const which = execSync('which chromium chromium-browser google-chrome google-chrome-stable 2>/dev/null || find /nix /usr -name "chromium" -type f 2>/dev/null | head -5', {encoding:'utf8'}).trim();
+    console.log('🔍 Chromium trouvé:', which);
+    const first = which.split('\n')[0];
+    if (first) return first;
+  } catch(e) {
+    console.log('🔍 which chromium error:', e.message);
+  }
+
   const candidates = [
     process.env.CHROMIUM_PATH,
     '/usr/bin/chromium',
@@ -17,18 +26,12 @@ function findChromium() {
     '/usr/bin/google-chrome',
     '/usr/bin/google-chrome-stable',
     '/nix/var/nix/profiles/default/bin/chromium',
+    '/run/current-system/sw/bin/chromium',
   ];
   for (const p of candidates) {
     if (!p) continue;
-    try {
-      execSync(`test -f "${p}"`, { stdio:'ignore' });
-      return p;
-    } catch {}
+    try { execSync(`test -f "${p}"`, {stdio:'ignore'}); console.log('✅ Chromium path:', p); return p; } catch {}
   }
-  // Cherche dans PATH
-  try {
-    return execSync('which chromium || which chromium-browser || which google-chrome', {encoding:'utf8'}).trim().split('\n')[0];
-  } catch {}
   return null;
 }
 
