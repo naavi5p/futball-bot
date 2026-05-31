@@ -4,16 +4,41 @@
 // ═══════════════════════════════════════════════════════════════════
 
 const puppeteer = require('puppeteer-core');
-const chromium  = require('@sparticuz/chromium');
+const { execSync } = require('child_process');
 
 let browserInstance = null;
 
+function findChromium() {
+  // Cherche chromium installé par Nix ou le système
+  const candidates = [
+    process.env.CHROMIUM_PATH,
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/nix/var/nix/profiles/default/bin/chromium',
+  ];
+  for (const p of candidates) {
+    if (!p) continue;
+    try {
+      execSync(`test -f "${p}"`, { stdio:'ignore' });
+      return p;
+    } catch {}
+  }
+  // Cherche dans PATH
+  try {
+    return execSync('which chromium || which chromium-browser || which google-chrome', {encoding:'utf8'}).trim().split('\n')[0];
+  } catch {}
+  return null;
+}
+
 async function getBrowser() {
   if (!browserInstance || !browserInstance.connected) {
-    const execPath = await chromium.executablePath();
+    const execPath = findChromium();
+    if (!execPath) throw new Error('Chromium introuvable sur le système');
     browserInstance = await puppeteer.launch({
-      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
       executablePath: execPath,
+      args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--disable-gpu','--headless'],
       headless: true,
     });
   }
