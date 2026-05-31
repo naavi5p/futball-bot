@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════
 
 const puppeteer = require('puppeteer-core');
-const chromium  = require('@sparticuz/chromium').default;
+const chromium  = require('@sparticuz/chromium');
 
 let browserInstance = null;
 
