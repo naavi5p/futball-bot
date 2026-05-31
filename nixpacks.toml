@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nss", "nspr", "atk", "cups", "libdrm", "dbus", "libxkbcommon", "xorg.libX11", "xorg.libXcomposite", "xorg.libXdamage", "xorg.libXext", "xorg.libXfixes", "xorg.libXrandr", "mesa", "libgbm", "alsa-lib", "pango", "cairo", "expat", "udev", "glib", "fontconfig", "freetype", "libpng", "libjpeg"]
+nixPkgs = ["glib", "nss", "nspr", "atk", "cups", "libdrm", "dbus", "libxkbcommon", "xorg.libX11", "xorg.libXcomposite", "xorg.libXdamage", "xorg.libXext", "xorg.libXfixes", "xorg.libXrandr", "mesa", "libgbm", "alsa-lib", "pango", "cairo", "expat", "udev", "fontconfig", "freetype", "libpng", "libjpeg", "gtk3", "gdk-pixbuf"]
 
 [phases.start]
 cmd = "node index.js"
